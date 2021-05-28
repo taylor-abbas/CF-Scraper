@@ -20,5 +20,8 @@ from .views import index, stats
 
 urlpatterns = [
     path('', index),
-    path('stats/', stats)
+    path('stats/', stats),
+    # path('', ChartData.as_view(), name="charts"),
+    # path('api/data/', get_data, name="api-data"),
+    # path('charts/', charts)
 ]
