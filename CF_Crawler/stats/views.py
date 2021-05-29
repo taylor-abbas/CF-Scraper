@@ -50,8 +50,8 @@ def stats(request):
 
 def get_data(handle):
     all_data = {}
-    info = get_info(handle)
 
+    # info = get_info(handle)
     # ratings = get_contest_ratings(handle)
     # problems = get_problems(handle)
     return all_data
