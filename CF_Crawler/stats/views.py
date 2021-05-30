@@ -5,99 +5,112 @@ import requests
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-
-class Submission:
-    def __init__(self, type_of_submission, lang):
-        self.type = type_of_submission
-        self.lang = lang
-
-
-# class Problem:
-#     def __init__(self, id, name):
-#         self.id = id
-#         self.name = name
-#         self.submissions = []
-
-#     def add_submission(self, sub):
-#         self.submissions.append(sub)
-
-#     def get_lang_submissions(self):
-#         dict = {}
-#         # for each submission:
-#         #   if lang of submission exist in dict:
-#         #       dict[lang]++
-#         # else:
-#         #   add in dict {lang : 1}
-#         return dict
-
-#     def get_type_of_submissions(self):
-#         dict = {"AC": 0, "WA": 0, "RE": 0, "TLE": 0, "CE": 0}
-#         # for each submission:
-#         #   dict[type]++;
-#         # else:
-#         #    add in dict {lang : 1}
-#         return dict
+handle = "taylor_abbas"
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-@api_view(['GET', 'POST'])
 def stats(request):
     print("stats is called")
     cf_handle = request.POST['handle']
-    all_data = get_data(cf_handle)
-    final_data = get_formatted_data(all_data)
-    final_data["handle"] = cf_handle
-    # return render(request, 'result.html', all_data)
-    return Response(final_data)
+    global user_name
+    user_name = cf_handle
+    info = get_info(cf_handle)
+    return render(request, 'result.html', info)
+    # return Response(final_data)
 
 
-def get_formatted_data(data):
-    # info , rating , problems
-    f_data = {}
-    # done till here
-    # print(data[""])
-    f_data.update(data["info"])
-    # f_data["problems"] = data["problems"]["problems"]
-    # f_data["questions"] = data["problems"]["questions"]
-    # f_data["lang_data"] = get_lang_data(data["problems"]["problems"])
-    f_data["contests_list"] = data["ratings"]["ratings"]
-    f_data["max_up"] = data["ratings"]["max_up"]
-    f_data["max_down"] = data["ratings"]["max_down"]
-    f_data["min_rank"] = data["ratings"]["min_rank"]
-    f_data["max_rank"] = data["ratings"]["max_rank"]
-    # print(f_data)
-    return f_data
+@api_view(['GET', 'POST'])
+def create_info_api_view(request):
+    dict = get_info(user_name)
+    return Response(dict)
+
+
+@api_view(['GET', 'POST'])
+def create_contests_api_view(request):
+    dict = get_contest_ratings(user_name)["ratings"]
+    data = {
+        "labels": list(dict.keys()),
+        "values": list(dict.values())
+    }
+    return Response(data)
+
+
+@api_view(['GET', 'POST'])
+def create_submissions_api_view(request):
+    dict = get_submissions_data(user_name)["submissions"]
+    data = {
+        "labels": list(dict.keys()),
+        "values": list(dict.values())
+    }
+    return Response(data)
+
+
+@api_view(['GET', 'POST'])
+def create_languages_api_view(request):
+    dict = get_submissions_data(user_name)["lang_data"]
+    data = {
+        "labels": list(dict.keys()),
+        "values": list(dict.values())
+    }
+    return Response(data)
+
+
+@api_view(['GET', 'POST'])
+def create_problems_api_view(request):
+    dict = get_submissions_data(user_name)["unsolved"]
+    data = {
+        "labels": list(dict.keys()),
+        "values": list(dict.values())
+    }
+    return Response(data)
+
+
+# def charts(request):
+#     print("charts is called")
+#     # cf_handle = request.POST['handle']
+#     global handle
+#     cf_handle = handle
+#     # all_data = get_data(cf_handle)
+#     return render(request, 'result.html')
+#     # return Response(final_data)
+
+
+# def get_formatted_data(data):
+#     # info , rating , problems
+#     f_data = {}
+#     # done till here
+#     # print(data[""])
+#     f_data.update(data["info"])
+#     f_data["problems"] = data["problems"]["problems"]
+#     f_data["questions"] = data["problems"]["questions"]
+#     f_data["contests_list"] = data["ratings"]["ratings"]
+#     f_data["max_up"] = data["ratings"]["max_up"]
+#     f_data["max_down"] = data["ratings"]["max_down"]
+#     f_data["min_rank"] = data["ratings"]["min_rank"]
+#     f_data["max_rank"] = data["ratings"]["max_rank"]
+#     # print(f_data)
+#     return f_data
 
 # f_data -> keys -> lang_data , contests_lists, max_up, max_down, min_rank, max_rank, proble
 
 
-def get_lang_data(problems):
-    lang_data = {}
-    for key in problems:
-        for sub in problems[key]:
-            if sub.lang in lang_data:
-                lang_data[sub.lang] += 1
-            else:
-                lang_data[sub.lang] = 1
-    print(lang_data)
-    return lang_data
+# def get_data(handle):
 
+#     # basic info of the user
+#     info = get_info(handle)
 
-def get_data(handle):
+#     # dict of contest : new_rating
+#     ratings = get_contest_ratings(handle)
 
-    info = get_info(handle)
-    ratings = get_contest_ratings(handle)
-    # problems = get_problems(handle)
+#     submissions_data = get_submissions_data(handle)
+#     submissions = submissions_data["submissions"]
+#     lang_data = submissions_data["lang_data"]
+#     unsolved = submissions_data["unsolved"]
 
-    all_data = {
-        "info": info,
-        "ratings": ratings,
-        # "problems": problems
-    }
-    return all_data
+#     pass
 
 
 def get_info(handle):
@@ -119,7 +132,8 @@ def get_info(handle):
         "user_title": user_title,
         "curr_rating": curr_rating,
         "max_title": max_title,
-        "max_rating": max_rating
+        "max_rating": max_rating,
+        "handle": handle
     }
     return data
 
@@ -146,6 +160,9 @@ def get_contest_ratings(handle):
 
         contest_name = row_as_list[1].text.strip()
         new_rating = int(row_as_list[6].text.strip())
+        contest_name = contest_name.replace("Codeforces Round", "CF")
+        contest_name = contest_name.replace("Educational", "Edu")
+        contest_name = contest_name.replace("Rated for", "")
 
         max_up = max(max_up, int(row_as_list[5].text.strip()))
         max_down = min(max_down, int(row_as_list[5].text.strip()))
@@ -161,25 +178,26 @@ def get_contest_ratings(handle):
     return data
 
 
-def get_problems(handle):
+def get_submissions_data(cf_handle):
     # returns a dictionary of problems solved where each
     # key is question_id and each
     # value is an array of submissions of that problem
 
-    url = "https://codeforces.com/submissions/" + handle
+    url = "https://codeforces.com/submissions/" + cf_handle
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'lxml')
     pages = soup.findAll("span", {"class": "page-index"})
-
+    print(type(pages), len(pages))
     total_pages = int(pages[len(pages) - 1].text)
-    questions = {
-        "ACquestions": 0,
-        "REquestions": 0,
-        "TLEquestions": 0,
-        "CEquestions": 0,
-        "WAquestions": 0
+    submissions = {
+        "AC": 0,
+        "RE": 0,
+        "TLE": 0,
+        "CE": 0,
+        "WA": 0
     }
-    problems = {}
+    lang_data = {}
+    unsolved_problems = {}
     n = 0  # number of submission
     for i in range(1, total_pages+1):
         curr_url = url + "/page/" + str(i)
@@ -201,24 +219,31 @@ def get_problems(handle):
             l = 0
             qId = get_qId(bigId)
             tos = get_tos(sub[0])  # type of submission
-
-            s = Submission(tos, lang)
+            idx = get_idx(sub[0])
             n += 1
-            if qId in problems:
-                problems[qId].append(s)
+
+            if lang in lang_data:
+                lang_data[lang] += 1
             else:
-                problems[qId] = [s]
-            # print(tos)
-            question = tos + "questions"
-            questions[question] += 1
-            # table.append(s)
-    print(questions["ACquestions"], questions["REquestions"],
-          questions["TLEquestions"], questions["CEquestions"], questions["WAquestions"],)
-    print("Total number of submissions : " + str(n) +
-          "\nTotal number of problems attempted : " + str(problems.__len__()))
+                lang_data[lang] = 1
+
+            if qId in unsolved_problems:
+                unsolved_problems[qId][idx] += 1
+            else:
+                unsolved_problems[qId] = [0, 0, 0, 0, 0]
+                unsolved_problems[qId][idx] += 1
+
+            submissions[tos] += 1
+
+    problems = {}
+    for key in unsolved_problems:
+        if unsolved_problems[key][0] == 0:
+            problems[key] = 1
+    print("Total number of submissions : " + str(n))
     data = {
-        "problems": problems,
-        "questions": questions
+        "unsolved": problems,
+        "submissions": submissions,
+        "lang_data": lang_data
     }
     return data
 
@@ -248,6 +273,20 @@ def get_qId(bigId):
             break
     qId = bigId[0:l] + " " + bigId[l+9:]
     return qId
+
+
+def get_idx(c):
+    if(c == 'A'):
+        idx = 0
+    elif(c == 'W'):
+        idx = 1
+    elif(c == 'R'):
+        idx = 2
+    elif(c == 'T'):
+        idx = 3
+    else:
+        idx = 4
+    return idx
 
 
 def get_tos(c):
@@ -284,23 +323,3 @@ def get_rating(title_and_rating):
 
     rating = title_and_rating[idx+3: -1]
     return rating
-
-# data = {
-#     "problems" : {
-#         "question_id 1": [
-#             Submission1, Submission2, Submission3, Submission4
-#         ],
-#         "question_id 1": [
-#             Submission1, Submission2, Submission3, Submission4
-#         ],
-#         "question_id 3": [
-#             Submission1, Submission2, Submission3, Submission4
-#         ]
-#     },
-#     "key 2" : int1
-# }
-
-
-# @api_view()
-# def hello_world(request, data):
-#     return Response(data)

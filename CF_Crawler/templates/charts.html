@@ -2,19 +2,20 @@
 
 <script>
     {% block jquery %}
-    var endpoint = "api/chart/data/"
+    var endpoint = "stats/api/data/lang"
     var ranks = [];
     $.ajax({
         method :"GET",
         url : endpoint,
         success: (dataset)=>{
             console.log(dataset)
-            ranks = dataset.Ranks;
+            ranks = dataset.values;
+            label = dataset.labels;
             var ctx = document.getElementById('ratingChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Contest #1', 'Contest #2', 'Contest #3', 'Contest #4', 'Contest #5', 'Contest #6'],
+                    labels: label,
                     datasets: [{
                         label: 'Ratings',
                         data: ranks,

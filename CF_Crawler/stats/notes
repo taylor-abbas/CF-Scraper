@@ -1,2 +1,12 @@
 >> add a function that lets the user choose upto 6 different problem tags and then displays a radar chart showing number of AC Submission etc for each tags.
 >> format contest names
+
+>> number of AC , WA , TLE , RE , CE >>>> DONE DONE
+>> each language with its number of submissions >>>> DONE DONE
+>> contests and ratings >>>> DONE DONE
+>> attempted but unsolved problems >>>> DONE
+
+TAGs STUFF =>
+    >> all tags and their number of AC submissions
+    >> which tag has most WA/AC ratio, smallest WA/AC ratio
+    >> each difficulty level - number of submissions => ["800" : 23] 

@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from .views import index, stats
+from .views import index, stats, create_problems_api_view, create_submissions_api_view, create_languages_api_view, create_contests_api_view, create_info_api_view
 
 urlpatterns = [
-    path('', index),
+    # path('', index),
     path('stats/', stats),
-    # path('', ChartData.as_view(), name="charts"),
-    # path('api/data/', get_data, name="api-data"),
+    path('', index),
+    path('stats/api/data/info', create_info_api_view, name="info-api"),
+    path('stats/api/data/contests', create_contests_api_view, name="contests-api"),
+    path('stats/api/data/submissions',
+         create_submissions_api_view, name="submissions-api"),
+    path('stats/api/data/lang', create_languages_api_view, name="languages-api"),
+    path('stats/api/data/problems', create_problems_api_view, name="problems-api"),
     # path('charts/', charts)
 ]

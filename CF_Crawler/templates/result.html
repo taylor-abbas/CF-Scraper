@@ -1,3 +1,181 @@
-{% block title %} RESULT {% endblock title %} {% block content %}
-<h1>this is the result page</h1>
+{% extends 'base.html' %}
+{% block title %} RESULT {% endblock %} 
+{% block content %}
+
+<div class= "container mt-3">
+    <h2>Hi {{handle}}</h2>
+</div>
+<div class= "container mt-3 mt-3 mb-3" id = "personal-info">
+    <ul>
+        <li>Current Title : {{user_title}}</li>
+        <li>Current rating : {{curr_rating}}</li>
+        <li>Best Title : {{max_title}}</li>
+        <li>Best Rating : {{max_rating}}</li>
+    </ul>
+</div>
+
+<div class="container col-sm-4">
+    <canvas id="langChart" width="500" height="500"></canvas>
+</div>
+<div class="container col-sm-4">
+    <canvas id="subChart" width="500" height="500"></canvas>
+</div>
+<div class="container col-sm-9">
+    <canvas id="ratingsChart" width="800" height="500"></canvas>
+</div>
 {% endblock content %}
+
+
+<script>
+    {% block jquery %}
+    // lang chart
+    var endpoint = "api/data/lang"
+    var ranks = [];
+    $.ajax({
+        method :"GET",
+        url : endpoint,
+        success: (dataset)=>{
+            console.log(dataset)
+            // values = dataset.values;
+            // labels = dataset.labels;
+
+            var ctx = document.getElementById('langChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    // labels: ['Contest #1', 'Contest #2', 'Contest #3', 'Contest #4', 'Contest #5', 'Contest #6'],
+                    labels : dataset.labels,
+                    datasets: [{
+                        label: 'Language',
+                        data: dataset.values,
+                        backgroundColor: [
+                            'rgba(155, 255, 32, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(55, 200, 0, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                }
+            });
+            console.log("Languages Chart completed")
+        },
+        error:(e)=>{
+            console.log("errrorr");
+            console.log(e);
+        }
+    })
+
+    // sub chart
+    endpoint = "api/data/submissions"
+    $.ajax({
+        method :"GET",
+        url : endpoint,
+        success: (dataset)=>{
+            console.log(dataset)
+
+            var ctx = document.getElementById('subChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    // labels: ['Contest #1', 'Contest #2', 'Contest #3', 'Contest #4', 'Contest #5', 'Contest #6'],
+                    labels : dataset.labels,
+                    datasets: [{
+                        label: 'Ratings',
+                        data: dataset.values,
+                        backgroundColor: [
+                            'rgba(155, 255, 32, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(55, 200, 0, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            console.log("Submissions Chart completed")
+        },
+        error:(e)=>{
+            console.log("errrorr");
+            console.log(e);
+        }
+    })
+    
+    // contest chart
+    endpoint = "api/data/contests"
+    $.ajax({
+        method :"GET",
+        url : endpoint,
+        success: (dataset)=>{
+            console.log(dataset)
+
+            var ctx = document.getElementById('ratingsChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    // labels: ['Contest #1', 'Contest #2', 'Contest #3', 'Contest #4', 'Contest #5', 'Contest #6'],
+                    labels : dataset.labels,
+                    datasets: [{
+                        label: 'Submissions',
+                        data: dataset.values,
+                        backgroundColor: [
+                            // 'rgba(155, 255, 32, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ],
+                        borderColor: [
+                            // 'rgba(55, 200, 0, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            // 'rgba(255, 206, 86, 1)',
+                            // 'rgba(75, 192, 192, 1)',
+                            // 'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+        	            }]
+                    }
+                }
+            });
+            console.log("Submissions Chart completed")
+        },
+        error:(e)=>{
+            console.log("errrorr");
+            console.log(e);
+        }
+    })
+    {% endblock jquery %}
+</script>
