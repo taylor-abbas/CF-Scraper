@@ -14,7 +14,7 @@ Change directory to the main project folder 'CF_Crawler' and run the following c
 
 ```python manage.py runserver```
 
-## Languages and Frameworks used:
+## Tech Stack:
 
 * Django Framework
 * HTML, CSS and Bootstrap for frontend
