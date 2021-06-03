@@ -8,3 +8,15 @@ import requests
 
 # def index(request):
 #     return HttpResponse("index.html")
+
+
+<div class = "container mx-3 my-3" >
+      <form method = "post" >
+        <div class = "mb-3" >
+          <label for = "CF Handle" class = "form-label" > Handle < /label >
+          <input type = "text" class = "form-control" id = "handle" aria-describedby = "emailHelp" >
+          <div id = "handle" class = "form-text" > We'll never share your handle with anyone else. < /div >
+        </div >
+        <button type = "submit" class = "btn btn-primary" > Submit < /button >
+      </form >
+    </div>
