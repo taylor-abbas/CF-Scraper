@@ -4,7 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+        {% block head %}{% endblock head %}
         <!-- Bootstrap CSS -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
@@ -29,7 +29,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">CF Crawler </a>
+                <a class="navbar-brand fw-lighter fs-2" href="#">CF Crawler </a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -45,6 +45,7 @@
                     class="collapse navbar-collapse"
                     id="navbarSupportedContent"
                 >
+                    {% comment %}
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a
@@ -109,6 +110,7 @@
                             Search
                         </button>
                     </form>
+                    {% endcomment %}
                 </div>
             </div>
         </nav>

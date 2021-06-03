@@ -6,11 +6,12 @@
 </script>
 
 {% block title %}Dashboard{% endblock title %} {% block content %}
-<div class="container mx-3 my-3" id="p-form">
+<div class="jumbotron jumbotron-fluid mt-4" id="p-form">
     <form method="post" action="stats/" id="form1">
         {% csrf_token %}
         <div class="mb-3">
-            <label for="CF Handle" class="form-label">Handle</label>
+            <!-- <label for="CF Handle" class="form-label">Handle</label> -->
+            <h2 class="display-6">Hi, enter your CF handle below</h2>
             <input
                 type="text"
                 class="form-control"

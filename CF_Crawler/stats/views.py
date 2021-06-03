@@ -5,7 +5,7 @@ import requests
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-handle = "taylor_abbas"
+user_name = "taylor_abbas"
 
 
 def index(request):
@@ -31,9 +31,15 @@ def create_info_api_view(request):
 @api_view(['GET', 'POST'])
 def create_contests_api_view(request):
     dict = get_contest_ratings(user_name)["ratings"]
+    labels = list(dict.keys())
+    print(labels[0])
+    labels.reverse()
+    print(labels[0])
+    vals = list(dict.values())
+    vals.reverse()
     data = {
-        "labels": list(dict.keys()),
-        "values": list(dict.values())
+        "labels": labels,
+        "values": vals
     }
     return Response(data)
 
@@ -61,9 +67,12 @@ def create_languages_api_view(request):
 @api_view(['GET', 'POST'])
 def create_problems_api_view(request):
     dict = get_submissions_data(user_name)["unsolved"]
+    labels = list(dict.keys())
+    labels.reverse()
+    vals = list(dict.values())
     data = {
-        "labels": list(dict.keys()),
-        "values": list(dict.values())
+        "labels": labels,
+        "values": vals
     }
     return Response(data)
 
@@ -306,7 +315,7 @@ def get_tos(c):
 def get_title(title_and_rating):
     idx = 0
     for i in range(6, len(title_and_rating)):
-        if not (title_and_rating[i].isalpha()):
+        if (title_and_rating[i] == ','):
             idx = i
             break
 
@@ -317,7 +326,7 @@ def get_title(title_and_rating):
 def get_rating(title_and_rating):
     idx = 0
     for i in range(6, len(title_and_rating)):
-        if not (title_and_rating[i].isalpha()):
+        if (title_and_rating[i] == ','):
             idx = i
             break
 

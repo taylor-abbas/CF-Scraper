@@ -2,15 +2,14 @@
 {% block title %} RESULT {% endblock %} 
 {% block content %}
 
-<div class= "container mt-3">
-    <h2>Hi {{handle}}</h2>
-</div>
-<div class= "container mt-3 mt-3 mb-3" id = "personal-info">
-    <ul>
-        <li>Current Title : {{user_title}}</li>
-        <li>Current rating : {{curr_rating}}</li>
-        <li>Best Title : {{max_title}}</li>
-        <li>Best Rating : {{max_rating}}</li>
+<div class= "jumbotron jumbotron-fluid mt-4 mb-3">
+    
+    <h1 class="display-4 mb-2">Hi {{handle}}</h1>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Current Title : {{user_title}}</li>
+        <li class="list-group-item">Current rating : {{curr_rating}}</li>
+        <li class="list-group-item">Best Title : {{max_title}}</li>
+        <li class="list-group-item">Best Rating : {{max_rating}}</li>
     </ul>
 </div>
 
