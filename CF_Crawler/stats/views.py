@@ -133,7 +133,14 @@ def get_info(handle):
         "span", {"style": "font-weight:bold;"}).text.strip()
     best_title_and_rating = info.find(
         "span", {"class": "smaller"}).text.strip()
+    s = ""
+    dict = get_submissions_data(handle)
+    unsolved = dict["unsolved"]
 
+    for q in unsolved:
+        s += (q + ", ")
+
+    s = s[:-2]
     max_title = get_title(best_title_and_rating)
     max_rating = get_rating(best_title_and_rating)
     print(user_title, curr_rating, max_title, max_rating)
@@ -142,7 +149,8 @@ def get_info(handle):
         "curr_rating": curr_rating,
         "max_title": max_title,
         "max_rating": max_rating,
-        "handle": handle
+        "handle": handle,
+        "unsolved": s
     }
     return data
 
@@ -202,6 +210,7 @@ def get_submissions_data(cf_handle):
         "AC": 0,
         "RE": 0,
         "TLE": 0,
+        "MLE": 0,
         "CE": 0,
         "WA": 0
     }
@@ -257,21 +266,6 @@ def get_submissions_data(cf_handle):
     return data
 
 
-# problems = {
-#     "question_id 1": [
-#         Submission1, Submission2, Submission3, Submission4
-#     ],
-#     "question_id 1": [
-#         Submission1, Submission2, Submission3, Submission4
-#     ],
-#     "question_id 3": [
-#         Submission1, Submission2, Submission3, Submission4
-#     ]
-# }
-#
-# Submission.type = {WA, AC, RE, TLE, CE}
-# Submission.lang = {Java, C++, Python}
-
 def get_qId(bigId):
     bigId = bigId[9:]
     l = 0
@@ -307,6 +301,8 @@ def get_tos(c):
         tos = "RE"
     elif(c == 'W'):
         tos = "WA"
+    elif(c == 'M'):
+        tos = "MLE"
     else:
         tos = "CE"
     return tos
