@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'stats',
+    'goto',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'CF_Crawler.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

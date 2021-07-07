@@ -12,6 +12,9 @@
             integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
             crossorigin="anonymous"
         />
+        {% load static %} {% comment %}
+        <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}" />
+        {% endcomment %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.4.0/chartjs-plugin-colorschemes.min.js"></script>
         <script
@@ -31,7 +34,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand fw-lighter fs-2" href="#">CF Crawler </a>
+                <a class="navbar-brand fw-lighter fs-2">CF Crawler </a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -47,8 +50,8 @@
                     class="collapse navbar-collapse"
                     id="navbarSupportedContent"
                 >
-                    {% comment %}
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {% comment %}
                         <li class="nav-item">
                             <a
                                 class="nav-link active"
@@ -91,28 +94,43 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        {% endcomment %}
+                        <li class="nav-item ml-5">
                             <a
                                 class="nav-link disabled"
                                 href="#"
                                 tabindex="-1"
                                 aria-disabled="true"
-                                >Disabled</a
+                                >Enter problem id in the search bar on the right
+                                in the format <1542 E1> to go to the problem</a
                             >
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    {% comment %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a>enter problem id like <1542/E1></a>
+                        </li>
+                    </ul>
+                    {% endcomment %}
+                    <form
+                        class="d-flex"
+                        action="http://127.0.0.1:8000/goto"
+                        method="post"
+                        target="_blank"
+                    >
+                        {% csrf_token %}
                         <input
                             class="form-control me-2"
                             type="search"
-                            placeholder="Search"
+                            placeholder=""
                             aria-label="Search"
+                            name="qId"
                         />
                         <button class="btn btn-outline-success" type="submit">
-                            Search
+                            Go
                         </button>
                     </form>
-                    {% endcomment %}
                 </div>
             </div>
         </nav>
