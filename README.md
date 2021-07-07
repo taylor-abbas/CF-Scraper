@@ -1,6 +1,6 @@
 # CF-Crawler
 
-A very basic Codeforces Crawler that visually represents your codeforces submissions and contests data.
+A Codeforces Crawler that visually represents your codeforces submissions and contests data.
 
 
 ## How to run:
@@ -17,6 +17,7 @@ Change directory to the main project folder 'CF_Crawler' and run the following c
 ## Tech Stack:
 
 * Django Framework
+* *django.sqlite3* Database
 * HTML, CSS and Bootstrap for frontend
 * Ajax used to asynchronously call the API views created using Django-Rest Framework
 * beautifulsoup4 for scraping codeforces.com
