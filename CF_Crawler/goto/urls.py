@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from .views import index
+from .views import index, contact, success
 urlpatterns = [
     # path('', index),
-    path('', index)
+    path('', index),
+    path('contact', contact),
+    path('success', success),
     # path('charts/', charts)
 ]

@@ -34,7 +34,11 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand fw-lighter fs-2">CF Crawler </a>
+                <a
+                    class="navbar-brand fw-lighter fs-2"
+                    href="http://127.0.0.1:8000/"
+                    >CF Crawler
+                </a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -59,9 +63,6 @@
                                 href="#"
                                 >Home</a
                             >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a
@@ -95,10 +96,16 @@
                             </ul>
                         </li>
                         {% endcomment %}
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                href="http://127.0.0.1:8000/goto/contact"
+                                >Contact Us</a
+                            >
+                        </li>
                         <li class="nav-item ml-5">
                             <a
-                                class="nav-link disabled"
-                                href="#"
+                                class="nav-link"
                                 tabindex="-1"
                                 aria-disabled="true"
                                 >Enter problem id in the search bar on the right
@@ -115,7 +122,7 @@
                     {% endcomment %}
                     <form
                         class="d-flex"
-                        action="http://127.0.0.1:8000/goto"
+                        action="http://127.0.0.1:8000/goto/"
                         method="post"
                         target="_blank"
                     >
@@ -123,7 +130,7 @@
                         <input
                             class="form-control me-2"
                             type="search"
-                            placeholder=""
+                            placeholder="1542 E1"
                             aria-label="Search"
                             name="qId"
                         />
