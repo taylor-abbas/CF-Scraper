@@ -1,6 +1,6 @@
-# CF-Crawler
+# CF-Scraper
 
-A Codeforces Crawler that visually represents your codeforces submissions and contests data.
+A Codeforces Scraper that visually represents your codeforces submissions and contests data.
 
 
 ## How to run:
@@ -10,7 +10,7 @@ Make sure you have python installed and then run the following commanding to ins
 
 ```pip install -r requirements.txt```
 
-Change directory to the main project folder 'CF_Crawler' and run the following command:
+Change directory to the main project folder 'CF_Scraper' and run the following command:
 
 ```python manage.py runserver```
 
