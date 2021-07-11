@@ -17,7 +17,7 @@ Change directory to the main project folder 'CF_Scraper' and run the following c
 ## Tech Stack:
 
 * Django Framework
-* *django.sqlite3* Database
+* SQLite Database
 * HTML, CSS and Bootstrap for frontend
 * Ajax used to asynchronously call the API views created using Django-Rest Framework
 * beautifulsoup4 for scraping codeforces.com
