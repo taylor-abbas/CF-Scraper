@@ -1,1 +1,1 @@
-web: gunicorn CF_Crawler.wsgi
+web: gunicorn CF_Crawler/CF_Crawler.wsgi
